@@ -15,16 +15,15 @@ class AuthController extends Controller {
         if($request->username == 'aldmic' && $request->password == '123abc123'){
     
             session(['login' => true]);
-    
-            // remember login 7 hari
+
             if($request->remember){
                 Cookie::queue('remember_login', true, 10080);
             }
     
-            return redirect('/movies')->with('success','Login Berhasil');
+            return redirect('/movies')->with('success',__('app.login_success'));
         }
     
-        return back()->with('error','Login gagal');
+        return back()->with('error','Invalid Credentials');
     }
     
 
@@ -39,11 +38,12 @@ class AuthController extends Controller {
     public function logout()
     {
         session()->flush();
-        session()->regenerate();
         Cookie::queue(Cookie::forget('remember_login'));
-        // Add notification for logout
-        Session::flash('notification', 'You have successfully logged out.');
-        return redirect('/')->with('success','Logout Berhasil');
+        Session::flash('notification', __('app.logout_success'));
+        return redirect('/')
+        ->header('Cache-Control','no-cache, no-store, max-age=0, must-revalidate')
+        ->header('Pragma','no-cache')
+        ->header('Expires','Sat, 01 Jan 1990 00:00:00 GMT');
     }
 
 }

@@ -10,37 +10,43 @@ use Illuminate\Support\Facades\Session;
 class MovieController extends Controller
 {
     public function index(Request $request)
-    {
-        $client = new \GuzzleHttp\Client();
+{
+    $client = new \GuzzleHttp\Client();
+    $search = $request->input('search');
     
-        $search = $request->search ?? 'avengers';
-        if(empty($search)){
-            return redirect('movies')->with('error', 'Search term cannot be empty');
-        }
-        $page = $request->page ?? 1;
-    
+    if (empty($search)) {
+        $search = 'funny';
+    }
+
+    $page = $request->input('page', 1);
+
+    try {
         $response = $client->get('http://www.omdbapi.com/', [
             'query' => [
                 'apikey' => env('OMDB_KEY'),
                 's' => $search,
                 'page' => $page
-            ]
+            ],
+            'http_errors' => false
         ]);
         
-        $movies = json_decode($response->getBody());
-    
-        // Kalau request AJAX → return partial view
-        if ($request->ajax()) {
-            return view('movies.partials.movie_list', compact('movies'))->render();
-        }
-    
-        return view('movies.index', compact('movies'));
+        $body = json_decode($response->getBody());
+        $movies = (isset($body->Response) && $body->Response === "False") 
+                  ? (object)['Search' => []] 
+                  : $body;
+
+    } catch (\Exception $e) {
+        $movies = (object)['Search' => []];
     }
+    if ($request->ajax()) {
+        return view('movies.partials.movie_list', compact('movies'))->render();
+    }
+    return view('movies.index', compact('movies', 'search'));
+}
 
     public function show($id)
     {
         $client = new Client();
-
         $response = $client->get("http://www.omdbapi.com/", [
             'query' => [
                 'apikey' => env('OMDB_KEY'),

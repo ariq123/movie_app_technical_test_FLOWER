@@ -12,19 +12,28 @@
 */
 use App\Http\Controllers\LanguageController; 
 
-Route::get('/', 'AuthController@loginForm'); // Ensure 'loginForm' exists in AuthController
-Route::post('/login', 'AuthController@login'); // Ensure 'login' exists in AuthController
+Route::get('/', 'AuthController@loginForm'); 
+Route::post('/login', 'AuthController@login'); 
 
 Route::group(['middleware' => ['check.login', 'prevent.back', 'setlocale']], function () {
-    Route::get('/movies', 'MovieController@index'); // Ensure 'index' exists in MovieController
-    Route::get('/movies/{id}', 'MovieController@show'); // Ensure 'show' exists in MovieController
-    Route::get('/logout', 'AuthController@logout'); // Ensure 'logout' exists in AuthController
-    Route::post('/favorites', 'FavoriteController@store'); // Ensure 'store' exists in FavoriteController
-    Route::get('/favorites', 'FavoriteController@index'); // Ensure 'index' exists in FavoriteController
-    Route::delete('/favorites/{id}', 'FavoriteController@destroy'); // Ensure 'destroy' exists in FavoriteController
+    Route::get('/movies', 'MovieController@index'); 
+    Route::get('/movies/{id}', 'MovieController@show'); 
+    Route::get('/logout', 'AuthController@logout'); 
+    Route::post('/favorites', 'FavoriteController@store'); 
+    Route::get('/favorites', 'FavoriteController@index'); 
+    Route::delete('/favorites/{id}', 'FavoriteController@destroy'); 
 });
 
-Route::get('change-language/{lang}', 'LanguageController@changeLanguage')->name('change.language');
+Route::get('/change-language/{locale}', function ($locale) {
+
+    if (! in_array($locale, ['en','id'])) {
+        abort(400);
+    }
+    session(['locale' => $locale]);
+
+    return back();
+})->name('change.language');
+
 
 Route::fallback(function () {
     return redirect('/');
