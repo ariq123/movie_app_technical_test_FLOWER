@@ -4,6 +4,8 @@ Movie App adalah aplikasi web berbasis Laravel yang digunakan untuk
 menampilkan, mencari, dan melihat detail film menggunakan API eksternal
 https://www.omdbapi.com/
 
+Demo : 
+
 ------------------------------------------------------------------------
 
 ## 📌 Tech Stack & Library
@@ -99,17 +101,17 @@ Lalu gunakan format berikut:
 
 ### 🏠 Homepage
 
-![Homepage](public/screenshots/homepage.png)
+<img width="1916" height="1004" alt="A" src="https://github.com/user-attachments/assets/a68667aa-468d-4ae0-b14d-f1dfb8376db6" />
 
-### 🔎 Search Result
 
-![Search](public/screenshots/search.png)
+### 🔎 Favorite Movie
+
+<img width="1918" height="1007" alt="c" src="https://github.com/user-attachments/assets/54ad7b32-67cf-4431-9e85-6ce8a0be96c2" />
 
 ### 🎬 Detail Movie
 
-![Detail](public/screenshots/detail.png)
+<img width="1918" height="1009" alt="B" src="https://github.com/user-attachments/assets/186589a6-c599-446b-9d46-f5fe9b88abc3" />
 
-> Ganti file gambar sesuai screenshot asli project.
 
 ------------------------------------------------------------------------
 
