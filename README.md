@@ -5,7 +5,10 @@ menampilkan, mencari, dan melihat detail film menggunakan API eksternal
 https://www.omdbapi.com/
 
 Username: aldmic
+
 Password: 123abc123
+
+Demo Website : https://web-test-flower.up.railway.app/
 
 ------------------------------------------------------------------------
 
