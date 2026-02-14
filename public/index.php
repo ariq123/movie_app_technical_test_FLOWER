@@ -1,5 +1,7 @@
 <?php
-
+// Mematikan semua laporan error deprecated untuk PHP 8 compatibility
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
+ini_set('display_errors', 0);
 /**
  * Laravel - A PHP Framework For Web Artisans
  *
